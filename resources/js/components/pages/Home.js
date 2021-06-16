@@ -1,8 +1,7 @@
-import React from 'react';
-
+import React from "react";
 
 const Home = () => {
-    return ( 
+    return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-12">
@@ -11,11 +10,15 @@ const Home = () => {
                             <div className="mt-3">
                                 <h2>Welcome to home page</h2>
                                 <p>
-                                    This is a simple Project. <br/> 
-                                    It's work for Project and Task management.<br/> 
-                                    This system created with Laravel framwork and react.js.<br/>
-                                    Project and Task manage by API<br/>
-                                    Laravel passport use for user Authenticated 
+                                    This is a simple Project. <br />
+                                    It's work for Project and Task management.
+                                    <br />
+                                    This system created with Laravel framwork
+                                    and react.js.
+                                    <br />
+                                    Project and Task manage by API
+                                    <br />
+                                    Laravel passport use for user Authenticated
                                 </p>
                             </div>
                         </div>
@@ -23,8 +26,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-        
-     );
-}
- 
+    );
+};
+
 export default Home;

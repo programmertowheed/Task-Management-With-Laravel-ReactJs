@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  useLocation,
+  useHistory,
+  withRouter
+} from "react-router-dom";
 import { registerUser } from '../../../services/AuthService';
 import { PUBLIC_URL } from '../../constants';
 
@@ -45,15 +53,15 @@ class Register extends Component {
             };
             const submitDataStatus = await registerUser(postBody);
             if(submitDataStatus.success){
-                this.setState({
-                    name:'',
-                    email:'',
-                    password:'',
-                    password_confirmation:'',
-                    isLoading: false,
-                    errors:{},
-                    message:submitDataStatus.message,
-                });
+                // this.setState({
+                //     name:'',
+                //     email:'',
+                //     password:'',
+                //     password_confirmation:'',
+                //     isLoading: false,
+                //     errors:{},
+                //     message:submitDataStatus.message,
+                // });
                 localStorage.setItem("loginData",JSON.stringify(submitDataStatus));
                 window.location.href = PUBLIC_URL;
             }else{
@@ -70,6 +78,10 @@ class Register extends Component {
      
     
     render() { 
+        let isAuthed = this.props.isAuthed;
+        if(isAuthed){
+            return <Redirect to={`${PUBLIC_URL}`} />;
+        }
         return ( 
             <div className="container">
                 <div className="row justify-content-center">

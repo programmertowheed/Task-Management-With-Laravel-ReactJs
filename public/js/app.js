@@ -85950,6 +85950,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AuthenticatedRoutes__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./AuthenticatedRoutes */ "./resources/js/components/AuthenticatedRoutes.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -86023,17 +86025,19 @@ var App = /*#__PURE__*/function (_Component) {
           isLoggedIn: true
         });
       }
-    }
-  }, {
-    key: "render",
-    // checkAuthenticated = () =>{
+    } // checkAuthenticated = () =>{
     //     const loginStatus = this.state.isLoggedIn;
     //     if(loginStatus){
     //         return true;
     //     }
     //     return false;
     // }
+
+  }, {
+    key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_inc_Header__WEBPACK_IMPORTED_MODULE_3__["default"], {
         authData: this.state
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
@@ -86042,7 +86046,7 @@ var App = /*#__PURE__*/function (_Component) {
         component: _pages_Home__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AuthenticatedRoutes__WEBPACK_IMPORTED_MODULE_15__["default"], {
         exact: true,
-        authed: this.state.isLoggedIn //authed={this.checkAuthenticated()} 
+        authed: this.state.isLoggedIn //authed={this.checkAuthenticated()}
         ,
         path: "".concat(_constants__WEBPACK_IMPORTED_MODULE_9__["PUBLIC_URL"], "projects"),
         component: _pages_project_ProjectList__WEBPACK_IMPORTED_MODULE_8__["default"]
@@ -86067,12 +86071,20 @@ var App = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "".concat(_constants__WEBPACK_IMPORTED_MODULE_9__["PUBLIC_URL"], "register"),
         exact: true,
-        component: _pages_auth_Register__WEBPACK_IMPORTED_MODULE_12__["default"]
+        render: function render(props) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_pages_auth_Register__WEBPACK_IMPORTED_MODULE_12__["default"], _extends({}, props, {
+            isAuthed: _this2.state.isLoggedIn
+          }));
+        }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "".concat(_constants__WEBPACK_IMPORTED_MODULE_9__["PUBLIC_URL"], "login"),
         exact: true,
-        component: _pages_auth_Login__WEBPACK_IMPORTED_MODULE_13__["default"]
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_inc_Footer__WEBPACK_IMPORTED_MODULE_4__["default"], null));
+        render: function render(props) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_pages_auth_Login__WEBPACK_IMPORTED_MODULE_13__["default"], _extends({}, props, {
+            isAuthed: _this2.state.isLoggedIn
+          }));
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_inc_Footer__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
     }
   }]);
 
@@ -86081,8 +86093,8 @@ var App = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
 
-if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(App, null), document.getElementById('app'));
+if (document.getElementById("app")) {
+  react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(App, null), document.getElementById("app"));
 }
 
 /***/ }),
@@ -86108,26 +86120,43 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 
 
+ // function AuthenticatedRoutes ({component: Component, authed, ...rest}) {
+//     return (
+//         <Route
+//             {...rest}
+//             render={(props) => 
+//             authed === true
+//               ? (<Component {...props} />)
+//               : (<Redirect 
+//                     to={{ 
+//                         pathname: `${PUBLIC_URL}login`, 
+//                         state: {from: props.location } 
+//                       }} 
+//                 />)
+//             }
+//         />
+//     )
+// }
 
-
-function AuthenticatedRoutes(_ref) {
-  var Component = _ref.component,
+var AuthenticatedRoutes = function AuthenticatedRoutes(_ref) {
+  var children = _ref.children,
       authed = _ref.authed,
-      rest = _objectWithoutProperties(_ref, ["component", "authed"]);
+      rest = _objectWithoutProperties(_ref, ["children", "authed"]);
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _extends({}, rest, {
-    render: function render(props) {
-      return authed === true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+    render: function render(_ref2) {
+      var location = _ref2.location;
+      return authed === true ? children : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
         to: {
-          pathname: "".concat(_constants__WEBPACK_IMPORTED_MODULE_2__["PUBLIC_URL"], "login"),
+          pathname: '/login',
           state: {
-            from: props.location
+            from: location
           }
         }
       });
     }
   }));
-}
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (AuthenticatedRoutes);
 
@@ -86472,10 +86501,10 @@ var Login = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       errors: {},
-      message: '',
+      message: "",
       validated: false
     });
 
@@ -86519,15 +86548,13 @@ var Login = /*#__PURE__*/function (_Component) {
                 submitDataStatus = _context.sent;
 
                 if (submitDataStatus.success) {
-                  _this.setState({
-                    email: '',
-                    password: '',
-                    errors: {},
-                    message: ""
-                  });
-
                   localStorage.setItem("loginData", JSON.stringify(submitDataStatus));
-                  window.location.href = _constants__WEBPACK_IMPORTED_MODULE_5__["PUBLIC_URL"];
+                  window.location.href = _constants__WEBPACK_IMPORTED_MODULE_5__["PUBLIC_URL"]; // this.setState({
+                  //     email: "",
+                  //     password: "",
+                  //     errors: {},
+                  //     message: ""
+                  // });
                 } else if (submitDataStatus.message && submitDataStatus.errors == null) {
                   _this.setState({
                     message: submitDataStatus.message,
@@ -86568,6 +86595,14 @@ var Login = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      var isAuthed = this.props.isAuthed;
+
+      if (isAuthed) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Redirect"], {
+          to: "".concat(_constants__WEBPACK_IMPORTED_MODULE_5__["PUBLIC_URL"])
+        });
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -86592,7 +86627,7 @@ var Login = /*#__PURE__*/function (_Component) {
         variant: "danger",
         onClose: function onClose() {
           return _this2.setState({
-            message: ''
+            message: ""
           });
         },
         dismissible: true
@@ -86776,16 +86811,15 @@ var Register = /*#__PURE__*/function (_Component) {
                 submitDataStatus = _context.sent;
 
                 if (submitDataStatus.success) {
-                  _this.setState({
-                    name: '',
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    isLoading: false,
-                    errors: {},
-                    message: submitDataStatus.message
-                  });
-
+                  // this.setState({
+                  //     name:'',
+                  //     email:'',
+                  //     password:'',
+                  //     password_confirmation:'',
+                  //     isLoading: false,
+                  //     errors:{},
+                  //     message:submitDataStatus.message,
+                  // });
                   localStorage.setItem("loginData", JSON.stringify(submitDataStatus));
                   window.location.href = _constants__WEBPACK_IMPORTED_MODULE_5__["PUBLIC_URL"];
                 } else {
@@ -86821,6 +86855,14 @@ var Register = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+
+      var isAuthed = this.props.isAuthed;
+
+      if (isAuthed) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Redirect"], {
+          to: "".concat(_constants__WEBPACK_IMPORTED_MODULE_5__["PUBLIC_URL"])
+        });
+      }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
